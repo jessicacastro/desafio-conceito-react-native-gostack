@@ -26,9 +26,9 @@ export default function App() {
 
     const repositorie = response.data;
 
-    const repositoriesWithout = repositories.find(repo => repo.id !== id);
+    const repositoriesWithout = repositories.filter(repo => repo.id !== id);
     
-    setRepositories([repositorie, repositoriesWithout]);
+    repositoriesWithout.length > 0 ? setRepositories([...repositoriesWithout, repositorie]) : setRepositories([repositorie]);
 
   }
 
@@ -55,14 +55,14 @@ export default function App() {
                   style={styles.likeText}
                   testID={`repository-likes-${repositorie.id}`}
                 >
-                  {repositorie.likes} curtidas
+                  {repositorie.likes > 1 ? `${repositorie.likes + ' curtidas'}` : `${repositorie.likes + ' curtida'}`}
                 </Text>
               </View>
 
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => handleLikeRepository(repositorie.id)}
-                testID={`like-button-1`}
+                testID={`like-button-${repositorie.id}`}
               >
                 <Text style={styles.buttonText}>Curtir</Text>
               </TouchableOpacity>
